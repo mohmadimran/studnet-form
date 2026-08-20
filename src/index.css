@@ -1,4 +1,4 @@
-/* Global Styles */
+/* ===== Global Reset & Base ===== */
 * {
   margin: 0;
   padding: 0;
@@ -7,7 +7,7 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -15,143 +15,222 @@ body {
   padding: 20px;
 }
 
-/* Container */
-div[style*="max-width: 600px"] {
-  background: #ffffff;
-  padding: 40px 45px !important;
-  border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+/* ===== Main Container ===== */
+#root > div {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 24px;
+  padding: 40px 45px;
   width: 100%;
-  max-width: 600px;
-  transition: transform 0.3s ease;
+  max-width: 550px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-div[style*="max-width: 600px"]:hover {
+#root > div:hover {
   transform: translateY(-5px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
 }
 
-/* Heading */
-h1 {
-  font-size: 28px;
-  font-weight: 700;
-  color: #333;
+/* ===== Form ===== */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ===== Labels ===== */
+label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #b8b8d4;
+  margin-top: 14px;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-size: 11px;
+  transition: color 0.3s ease;
+}
+
+label:first-of-type {
+  margin-top: 0;
+}
+
+/* ===== Input Fields ===== */
+input {
+  width: 100%;
+  padding: 13px 18px;
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  font-size: 15px;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  outline: none;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 14px;
+}
+
+input:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+input:focus {
+  border-color: #7c6cf0;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 4px rgba(124, 108, 240, 0.15);
+}
+
+/* ===== Submit Button ===== */
+button[type="submit"] {
+  margin-top: 28px;
+  padding: 15px 20px;
+  background: linear-gradient(135deg, #7c6cf0 0%, #a855f7 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 20px rgba(124, 108, 240, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+button[type="submit"]:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(124, 108, 240, 0.5);
+}
+
+button[type="submit"]:active {
+  transform: translateY(0px);
+  box-shadow: 0 2px 15px rgba(124, 108, 240, 0.3);
+}
+
+/* ===== Error Message ===== */
+h2 {
+  color: #f87171 !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  background: rgba(248, 113, 113, 0.1);
+  border-left: 4px solid #f87171;
+  padding: 12px 16px !important;
+  border-radius: 8px;
+  margin-top: 18px !important;
+  animation: shake 0.4s ease;
+}
+
+/* ===== Popup Overlay ===== */
+/* Popup container (overlay) */
+#root > div > div:last-child {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Popup card */
+#root > div > div:last-child > div {
+  background: linear-gradient(145deg, #1a1a2e, #16213e);
+  border-radius: 24px;
+  padding: 45px 50px;
+  max-width: 480px;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
+  animation: popIn 0.4s ease;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Popup heading */
+#root > div > div:last-child h2 {
+  color: #7c6cf0 !important;
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  background: none !important;
+  border-left: none !important;
+  padding: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 24px !important;
   text-align: center;
-  margin-bottom: 30px;
-  letter-spacing: -0.5px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  animation: none !important;
+  background: linear-gradient(135deg, #7c6cf0, #a855f7);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Form */
-form {
+/* Popup text (user details) */
+#root > div > div:last-child p {
+  color: #d1d1e0;
+  font-size: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   display: flex;
-  flex-direction: column;
-  gap: 18px;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* Labels */
-label {
-  font-size: 14px;
+#root > div > div:last-child p:last-of-type {
+  border-bottom: none;
+}
+
+#root > div > div:last-child strong {
+  color: #b8b8d4;
   font-weight: 600;
-  color: #555;
-  margin-bottom: 4px;
-  letter-spacing: 0.3px;
   text-transform: uppercase;
   font-size: 12px;
+  letter-spacing: 0.5px;
 }
 
-/* Input Fields */
-input {
-  width: 100%;
-  padding: 12px 16px;
-  border: 2px solid #e0e0e0;
-  border-radius: 10px;
-  font-size: 15px;
-  font-family: inherit;
-  transition: all 0.3s ease;
-  background-color: #f8f9fa;
-  color: #333;
-}
-
-input:focus {
-  outline: none;
-  border-color: #667eea;
-  background-color: #ffffff;
-  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
-}
-
-input::placeholder {
-  color: #aaa;
-  font-size: 14px;
-}
-
-input:hover {
-  border-color: #b3b3b3;
-}
-
-/* Submit Button */
-button[type="submit"] {
-  margin-top: 10px;
-  padding: 14px 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+/* Popup close button */
+#root > div > div:last-child button {
+  margin-top: 28px;
+  padding: 14px 30px;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
   color: white;
   border: none;
-  border-radius: 10px;
-  font-size: 18px;
+  border-radius: 12px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  letter-spacing: 0.5px;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 20px rgba(239, 68, 68, 0.3);
 }
 
-button[type="submit"]:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+#root > div > div:last-child button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(239, 68, 68, 0.4);
 }
 
-button[type="submit"]:active {
+#root > div > div:last-child button:active {
   transform: translateY(0px);
-  box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
 }
 
-/* Error Message */
-p[style*="color: red"] {
-  background: #fff5f5;
-  border-left: 4px solid #e53e3e;
-  padding: 12px 16px !important;
-  border-radius: 8px;
-  color: #c53030 !important;
-  font-size: 14px;
-  font-weight: 500;
-  margin-top: 20px !important;
-  animation: shake 0.4s ease;
-}
-
-/* Responsive Design */
-@media (max-width: 640px) {
-  div[style*="max-width: 600px"] {
-    padding: 25px 20px !important;
-  }
-
-  h1 {
-    font-size: 24px;
-  }
-
-  input {
-    padding: 10px 14px;
-    font-size: 14px;
-  }
-
-  button[type="submit"] {
-    font-size: 16px;
-    padding: 12px 18px;
-  }
-}
-
-/* Animation for Error */
+/* ===== Animations ===== */
 @keyframes shake {
   0%,
   100% {
@@ -164,24 +243,101 @@ p[style*="color: red"] {
     transform: translateX(8px);
   }
   60% {
-    transform: translateX(-4px);
+    transform: translateX(-5px);
   }
   80% {
-    transform: translateX(4px);
+    transform: translateX(5px);
   }
 }
 
-/* Extra: Input group spacing */
-form > label {
-  margin-bottom: -8px;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-/* Success state for inputs (optional) */
-input:valid:not(:placeholder-shown) {
-  border-color: #48bb78;
+@keyframes popIn {
+  0% {
+    transform: scale(0.8) translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
 }
 
-/* Optional: Add some spacing between fields */
-form > *:not(label):not(button) {
-  margin-bottom: 4px;
+/* ===== Scrollbar Styling ===== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #7c6cf0, #a855f7);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7c6cf0;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 640px) {
+  #root > div {
+    padding: 28px 20px;
+  }
+
+  #root > div > div:last-child > div {
+    padding: 30px 24px;
+    max-width: 95%;
+  }
+
+  #root > div > div:last-child h2 {
+    font-size: 24px !important;
+  }
+
+  #root > div > div:last-child p {
+    font-size: 14px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  input {
+    padding: 11px 14px;
+    font-size: 14px;
+  }
+
+  button[type="submit"] {
+    font-size: 15px;
+    padding: 13px 16px;
+  }
+
+  #root > div > div:last-child button {
+    font-size: 14px;
+    padding: 12px 20px;
+  }
+
+  label {
+    font-size: 10px;
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  #root > div {
+    padding: 20px 15px;
+  }
+
+  #root > div > div:last-child > div {
+    padding: 20px 16px;
+  }
 }
