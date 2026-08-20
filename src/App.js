@@ -1,107 +1,154 @@
-import { useState } from "react";
+import { useState } from "react"
 
-const App = () => {
-  const [form, setForm] = useState({
-    name: "",
-    username: "",
-    college: "",
+export default function App() {
+  const [formData, setFormData] = useState({
+    userName: "",
     email: "",
     password: "",
     address: "",
-  });
+    collage: ""
+  })
 
-  const [error, setError] = useState("");
+  const [error, setError] = useState("")
+  const [showPopup, setShowPopup] = useState(false)
+  const [submittedUser, setSubmittedUser] = useState(null)
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-    setError(""); // clear error while typing
-  };
+  const handleInput = (e) => {
+    const { name, value } = e.target
+
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+
+    setError("")
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    // Validation: Name required
-    if (!form.name.trim()) {
-      setError("Name is required");
-      return;
+    if (!formData.userName.trim()) {
+      setError("Required user name")
+      return
     }
 
-    // Validation: Email format
-    const emailRegex = /\S+@\S+\.\S+/;
-    if (!emailRegex.test(form.email)) {
-      setError("Enter a valid email address");
-      return;
+    const userEmail = formData.email.includes("@")
+
+    if (!formData.email || !userEmail) {
+      setError("Invalid email")
+      return
     }
 
-    // Validation: Password length
-    if (form.password.length < 8) {
-      setError("Password must be at least 8 characters");
-      return;
+    if (!formData.password || formData.password.length < 6) {
+      setError("Password must be at least 6 characters")
+      return
     }
-  };
+
+    // Save submitted user information
+    setSubmittedUser(formData)
+
+    // Show popup
+    setShowPopup(true)
+
+    // Reset form
+    setFormData({
+      userName: "",
+      email: "",
+      password: "",
+      address: "",
+      collage: ""
+    })
+  }
+
+  const closePopup = () => {
+    setShowPopup(false)
+  }
 
   return (
-    <div style={{ padding: "20px", maxWidth: "600px" }}>
-      <h1>Student Registration Form</h1>
-
+    <div>
       <form onSubmit={handleSubmit}>
-        <label>Name</label>
+        <label htmlFor="name">Name</label>
         <input
-          name="name"
           type="text"
-          value={form.name}
-          onChange={handleChange}
+          id="name"
+          name="userName"
+          value={formData.userName}
+          onChange={handleInput}
         />
 
-        <label>Username</label>
+        <label htmlFor="email">Email</label>
         <input
-          name="username"
-          type="text"
-          value={form.username}
-          onChange={handleChange}
-        />
-
-        <label>College</label>
-        <input
-          name="college"
-          type="text"
-          value={form.college}
-          onChange={handleChange}
-        />
-
-        <label>Email</label>
-        <input
+          type="email"
+          id="email"
           name="email"
-          type="text"
-          value={form.email}
-          onChange={handleChange}
+          value={formData.email}
+          onChange={handleInput}
         />
 
-        <label>Password</label>
+        <label htmlFor="password">Password</label>
         <input
-          name="password"
           type="password"
-          value={form.password}
-          onChange={handleChange}
+          id="password"
+          name="password"
+          value={formData.password}
+          onChange={handleInput}
         />
 
-        <label>Address</label>
+        <label htmlFor="address">Address</label>
         <input
-          name="address"
           type="text"
-          value={form.address}
-          onChange={handleChange}
+          id="address"
+          name="address"
+          value={formData.address}
+          onChange={handleInput}
         />
 
-        <button type="submit">Register</button>
+        <label htmlFor="collage">College</label>
+        <input
+          type="text"
+          id="collage"
+          name="collage"
+          value={formData.collage}
+          onChange={handleInput}
+        />
+
+        <button type="submit">Submit</button>
       </form>
 
-      {/* Error message */}
-      {error && (
-        <p style={{ color: "red", marginTop: "10px" }}>{error}</p>
+      {error && <h2>{error}</h2>}
+
+      {/* Popup */}
+      {showPopup && submittedUser && (
+        <div>
+          <div>
+            <h2>Registration Successful 🎉</h2>
+
+            <p>
+              <strong>Name:</strong> {submittedUser.userName}
+            </p>
+
+            <p>
+              <strong>Email:</strong> {submittedUser.email}
+            </p>
+
+            <p>
+              <strong>Address:</strong> {submittedUser.address}
+            </p>
+
+            <p>
+              <strong>College:</strong> {submittedUser.collage}
+            </p>
+
+            <p>
+              <strong>Password:</strong> {submittedUser.password}
+            </p>
+
+            <button onClick={closePopup}>
+              Close
+            </button>
+          </div>
+        </div>
       )}
     </div>
-  );
-};
-
-export default App;
+  )
+}
